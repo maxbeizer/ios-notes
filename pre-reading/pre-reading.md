@@ -155,3 +155,82 @@ func lessThanTen(number: Int) -> Bool {
 var numbers = [20, 19, 7, 12]
 hasAnyMatches(numbers, lessThanTen) // passes function as a param
 ```
+
+### Object and Classes
+
+Declare a class:
+
+```swift
+class Shape {
+  var numberOfSides = 0
+  func simpleDescription() -> String {
+    return "A shape with \(numberOfSides) sides."
+  }
+}
+```
+
+Instantiate said class:
+
+```swift
+var shape = Shape()
+shape.numberOfSides = 7 // dot notation for accessing class properties/methods
+var shapeDescription = shape.simpleDescription()
+```
+
+Use and `init` function:
+
+```swift
+class NamedShape {
+  var numberOfSides: Int = 0
+  var name: String
+
+  init(name: String) {
+    self.name = name // self is the instance
+  }
+
+  func simpleDescription() -> String {
+    return "A shape with \(numberOfSides) sides."
+  }
+}
+```
+
+> Use `deinit` to create a deinitializer if you need to perform some cleanup
+before the object is deallocated.
+
+Class inheritance:
+
+```swift
+class Square: NamedShape {
+  var sideLength: Double // type declaration
+
+  init(sideLength: Double, name: String) {
+    self.sideLength = sideLength
+    super.init(name: name) // call to super class
+    numberOfSides = 4
+  }
+
+  func area() ->  Double {
+    return sideLength * sideLength
+  }
+
+// `override` required to override super class method -- compile error without
+  override func simpleDescription() -> String {
+    return "A square with sides of length \(sideLength)."
+  }
+}
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area() // 27.04
+test.simpleDescription() // "A sqaure with ..."
+```
+
+getters and setters (within a class):
+```swift
+var perimeter: Double {
+  get {
+    return 3.0 * sideLength
+  }
+  set { // instead of "newValue" could pass var name here with parens
+    sideLength = newValue / 3.0
+  }
+}
+```
